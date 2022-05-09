@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const stuffRoutes = require('./routes/stuff');
+const userRoutes = require('./routes/user');
 
 
 app.use(express.json());
@@ -22,7 +24,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 //utilisation du router en ajoutant la base de l'url qui s'ajoutera devant les url défini dans routes/stuff.js
 app.use('/api/stuff', stuffRoutes);
-
+app.use('/api/auth', userRoutes);
 module.exports = app;
